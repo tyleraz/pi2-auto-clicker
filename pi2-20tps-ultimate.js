@@ -13,7 +13,7 @@ javascript:(function(){
   
   // Optimized for 20 TPS peak performance
   const config = {
-    maxClicks: 220,           // Maximum clicks per session
+    maxClicks: 170,           // Maximum clicks per session
     peakTPS: 20,              // Target peak TPS
     normalTPS: 18,            // Normal TPS after peak
     peakDuration: 50,         // Clicks at peak TPS
@@ -237,6 +237,29 @@ javascript:(function(){
       }
     }
   }
+
+// Manual stop function (renamed to stop for convenience)
+window.stop = function() {
+  if (isActive) {
+    isActive = false;
+    const duration = (Date.now() - startTime) / 1000;
+    const avgTPS = clickCount / duration;
+
+    alert(`🛑 Auto-Clicker Manually Stopped!
+
+📊 Performance Stats:
+• Total Clicks: ${clickCount}
+• Session Clicks: ${sessionClicks}
+• Duration: ${duration.toFixed(1)} seconds
+• Average TPS: ${avgTPS.toFixed(1)}
+• Peak TPS: ${currentTPS.toFixed(1)}`);
+    
+    console.log('⏹️ Auto-clicker manually stopped via stop()');
+  } else {
+    console.log('ℹ️ Auto-clicker is already inactive');
+  }
+}
+
   
   // Check if we're on the right page
   const hasGameElements = document.querySelector('img[alt*="orb"]') || 
